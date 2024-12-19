@@ -84,8 +84,13 @@ namespace Container_App.Controllers
             if (request.UserIds == null || request.UserIds.Count == 0)
                 return BadRequest("User IDs are required.");
 
-            await _projectService.SendProjectInvitesAsync(request.ProjectId, request.UserIds);
-            return Ok("Invites sent successfully.");
+            int result = await _projectService.SendProjectInvitesAsync(request.ProjectId, request.UserIds);
+            var response = new ResponseModel(
+                    success: true,
+                    message: "Gửi lời mời thành công!",
+                    data: result
+                );
+            return Ok(response);
         }
 
         [Authorize]
@@ -96,7 +101,12 @@ namespace Container_App.Controllers
             if (!result)
                 return NotFound("Invite not found or already accepted.");
 
-            return Ok("Invite accepted successfully.");
+            var response = new ResponseModel(
+                    success: true,
+                    message: "Chấp nhận lời mời thành công!",
+                    data: result
+                );
+            return Ok(response);
         }
 
         [Authorize] 
@@ -107,7 +117,12 @@ namespace Container_App.Controllers
             if (!result)
                 return NotFound("Invite not found or already declined.");
 
-            return Ok("Invite declined successfully.");
+            var response = new ResponseModel(
+                    success: true,
+                    message: "Từ chối lời mời thành công!",
+                    data: result
+                );
+            return Ok(response);
         }
     }
 }

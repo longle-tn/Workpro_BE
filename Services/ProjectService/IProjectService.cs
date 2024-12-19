@@ -6,7 +6,7 @@ namespace Container_App.Services.ProjectService
     {
         Task<int> CreateProjectAsync(Project project, int userId);
         Task<bool> IsLockProjectAsync(int projectId);
-        Task SendProjectInvitesAsync(int projectId, List<int> userIds);
+        Task <int>SendProjectInvitesAsync(int projectId, List<int> userIds);
         Task<bool> AcceptInviteAsync(int inviteId);
         Task<bool> DeclineInviteAsync(int inviteId);
     }

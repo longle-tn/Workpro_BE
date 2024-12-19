@@ -28,7 +28,7 @@ namespace Container_App.Services.ProjectService
         public async Task<bool> AcceptInviteAsync(int inviteId)
         {
             var invite = await _projectuserInviteRepository.GetInviteAsync(inviteId);
-            if (invite == null || invite.Status != 0) // Ensure invite is pending
+            if (invite == null || invite.Status == 0) // Ensure invite is pending
                 return false;
 
             await _projectuserInviteRepository.AcceptInviteAsync(invite);
@@ -66,9 +66,9 @@ namespace Container_App.Services.ProjectService
             return _projectRepository.IsLockProjectAsync(projectId);
         }
 
-        public async Task SendProjectInvitesAsync(int projectId, List<int> userIds)
+        public async Task<int> SendProjectInvitesAsync(int projectId, List<int> userIds)
         {
-            await _projectuserInviteRepository.SendInvitesAsync(projectId, userIds);
+            return await _projectuserInviteRepository.SendInvitesAsync(projectId, userIds);
         }
     }
 }

@@ -23,6 +23,7 @@ using Container_App.utilities;
 using dotenv.net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
@@ -71,6 +72,7 @@ builder.Services.AddScoped<IMenuService, MenuService>();
 
 
 var jwtSecretKey = "pr5Oyw1J3I8E04g3XsPf5d8wPT9W2bMcwCm6qzHoOoI=";
+
 builder.Configuration["JWT_SECRET_KEY"] = jwtSecretKey;
 if (string.IsNullOrEmpty(jwtSecretKey))
 {
@@ -96,20 +98,21 @@ builder.Services.AddAuthentication(x =>
         ClockSkew = TimeSpan.Zero
     };
 });
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.WithOrigins("http://localhost:4200",
-                                              "http://localhost:4200")
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
-                      });
+    options.AddPolicy("allowall", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
 });
 
+// Cấu hình ứng dụng lắng nghe HTTP
+builder.WebHost.UseUrls("http://localhost:5295");
+
 var app = builder.Build();
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -118,9 +121,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(MyAllowSpecificOrigins);
+//app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection(); // Đặt trước UseRouting
+//app.UseHttpsRedirection(); // Đặt trước UseRouting // bỏ chạy http thâu
 app.UseRouting();
 
 app.UseAuthentication();

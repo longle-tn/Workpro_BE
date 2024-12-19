@@ -16,7 +16,7 @@ namespace Container_App.Repository.ProjectUserRepository
         public async Task AddUserToProjectAsync(ProjectUser projectUser)
         {
             string sql = @"
-                INSERT INTO ""ProjectUsers"" (""ProjectId"", ""UserId"", ""Role"", ""JoinedAt"")
+                INSERT INTO ""ProjectUser"" (""ProjectId"", ""UserId"", ""Role"", ""JoinedAt"")
                 VALUES (@ProjectId, @UserId, @Role, @JoinedAt)";
 
             var parameters = new[]

@@ -22,27 +22,25 @@ namespace Container_App.Repository.UserRepository
         {
             try
             {
-
                 string sqlQuery = @"
-                SELECT * FROM ""Users"" 
-                WHERE (@SearchTerm IS NULL OR ""FullName"" ILIKE '%' || @SearchTerm || '%') 
-                AND ""IsDel"" = false
-                ORDER BY ""UserId""
-                OFFSET @Offset ROWS 
-                FETCH NEXT @PageSize ROWS ONLY";
+                SELECT * FROM Users 
+                WHERE (@SearchTerm IS NULL OR FullName ILIKE '%' || @SearchTerm || '%')
+                AND IsDel = 0
+                ORDER BY UserId
+                OFFSET @Offset LIMIT @PageSize";
 
-                // Tạo NpgsqlParameter cho các tham số trong câu truy vấn
+
                 var parameters = new[]
                 {
                 new NpgsqlParameter("@SearchTerm", page.SearchTerm ?? (object)DBNull.Value),
                 new NpgsqlParameter("@Offset", (page.PageNumber - 1) * page.PageSize),
                 new NpgsqlParameter("@PageSize", page.PageSize),
-            };
-
+             };
                 return await _sqlQueryHelper.ExecuteQueryAsync<Users>(sqlQuery, parameters);
             }
-            catch (Exception ex) {
-                
+            catch (Exception ex)
+            {
+
             }
             return null;
         }

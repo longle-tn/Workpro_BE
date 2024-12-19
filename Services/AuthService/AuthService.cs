@@ -85,7 +85,9 @@ namespace Container_App.Services.AuthService
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Username),
                 new Claim(JwtRegisteredClaimNames.Jti, user.UserId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Name, user.FullName.ToString())
+                new Claim(JwtRegisteredClaimNames.Name, user.FullName.ToString()),
+                new Claim(JwtRegisteredClaimNames.Name, user.Phone.ToString()),
+                new Claim(JwtRegisteredClaimNames.Name, user.Email.ToString())
             };
 
             var jwtSecretKey = _jwtSecretKey;
