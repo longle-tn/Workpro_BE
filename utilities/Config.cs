@@ -29,4 +29,11 @@ namespace Container_App.utilities
         Lock = 2,
         Cancel = 3,
     }
+
+    public enum StatusTask
+    {
+        Active = 1,
+        Lock = 2,
+        Cancel = 3,
+    }
 }

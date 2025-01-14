@@ -1,6 +1,6 @@
 ﻿namespace Container_App.Model.Tasks
 {
-    public class Task
+    public class Tasks
     {
         public int TaskId { get; set; }
         public int ProjectId { get; set; }

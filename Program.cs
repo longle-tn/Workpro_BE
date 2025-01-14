@@ -8,6 +8,7 @@ using Container_App.Repository.ProjectUserRepository;
 using Container_App.Repository.RoleMenuAccessRepository;
 using Container_App.Repository.RolePermissionsRepository;
 using Container_App.Repository.RoleRepository;
+using Container_App.Repository.TaskRepository;
 using Container_App.Repository.UserRepository;
 using Container_App.Repository.UserRoleRepository;
 using Container_App.Services.AuthService;
@@ -17,6 +18,7 @@ using Container_App.Services.ProjectService;
 using Container_App.Services.RoleMenuAccessService;
 using Container_App.Services.RolePermissionsService;
 using Container_App.Services.RoleService;
+using Container_App.Services.TaskService;
 using Container_App.Services.UserRoleService;
 using Container_App.Services.UserService;
 using Container_App.utilities;
@@ -56,6 +58,7 @@ builder.Services.AddScoped<IRolePermissionsRepository, RolePermissionsRepository
 builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 builder.Services.AddScoped<IRoleMenuAccessRepository, RoleMenuAccessRepository>();
 builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 #endregion
 
 #region Add Service
@@ -68,6 +71,7 @@ builder.Services.AddScoped<IRolePermissionsService, RolePermissionsService>();
 builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<IRoleMenuAccessService, RoleMenuAccessService>();
 builder.Services.AddScoped<IMenuService, MenuService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 #endregion
 
 
