@@ -8,6 +8,7 @@ using Container_App.Repository.ProjectUserRepository;
 using Container_App.Repository.RoleMenuAccessRepository;
 using Container_App.Repository.RolePermissionsRepository;
 using Container_App.Repository.RoleRepository;
+using Container_App.Repository.TaskRepository;
 using Container_App.Repository.UserRepository;
 using Container_App.Repository.UserRoleRepository;
 using Container_App.Services.AuthService;
@@ -17,6 +18,7 @@ using Container_App.Services.ProjectService;
 using Container_App.Services.RoleMenuAccessService;
 using Container_App.Services.RolePermissionsService;
 using Container_App.Services.RoleService;
+using Container_App.Services.TaskService;
 using Container_App.Services.UserRoleService;
 using Container_App.Services.UserService;
 using Container_App.utilities;
@@ -25,6 +27,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
 
@@ -56,6 +59,7 @@ builder.Services.AddScoped<IRolePermissionsRepository, RolePermissionsRepository
 builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 builder.Services.AddScoped<IRoleMenuAccessRepository, RoleMenuAccessRepository>();
 builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 #endregion
 
 #region Add Service
@@ -68,6 +72,7 @@ builder.Services.AddScoped<IRolePermissionsService, RolePermissionsService>();
 builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<IRoleMenuAccessService, RoleMenuAccessService>();
 builder.Services.AddScoped<IMenuService, MenuService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 #endregion
 
 
@@ -110,6 +115,28 @@ builder.Services.AddCors(options =>
 
 // Cấu hình ứng dụng lắng nghe HTTP
 builder.WebHost.UseUrls("http://localhost:5295");
+
+builder.Services.AddSwaggerGen(c =>
+{
+    var securityScheme = new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "Please enter into field the word 'Bearer' following by space and JWT",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        //Scheme = "bearer", // must be lower case
+        Reference = new OpenApiReference
+        {
+            Id = "Bearer",
+            Type = ReferenceType.SecurityScheme
+        }
+    };
+    c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                                        {
+                                            {securityScheme, new string[] { }}
+                                        });
+});
 
 var app = builder.Build();
 app.UseCors("AllowAll");
