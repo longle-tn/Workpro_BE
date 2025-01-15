@@ -3,6 +3,7 @@ using Container_App.Model.Projects;
 using Container_App.Model.Tasks;
 using Container_App.utilities;
 using Npgsql;
+using System.Threading.Tasks;
 
 namespace Container_App.Repository.TaskRepository
 {
@@ -21,8 +22,7 @@ namespace Container_App.Repository.TaskRepository
             task.TaskId = await _sqlQueryHelper.ExecuteScalarAsync<int>(sqlGetMaxId);
 
             string sqlInsert = @"
-            INSERT INTO public.""Task"" (""TaskId"", ""ProjectId"", ""AssignedTo"", ""TaskName"", ""Description"", ""DueDate"", ""Status"", ""CreatedAt"", ""UpdatedAt""
-            ""CreatedBy"", ""CreatedAt"")
+            INSERT INTO public.""Task"" (""TaskId"", ""ProjectId"", ""AssignedTo"", ""TaskName"", ""Description"", ""DueDate"", ""Status"", ""CreatedAt"", ""UpdatedAt"")
             VALUES(@TaskId, @ProjectId, @AssignedTo, @TaskName, @Description, @DueDate, @Status, @CreatedAt, @UpdateAt);";
 
             // Tạo NpgsqlParameter cho các tham số trong câu lệnh INSERT
@@ -40,6 +40,18 @@ namespace Container_App.Repository.TaskRepository
             };
             // Thực thi câu lệnh INSERT
             return await _sqlQueryHelper.ExecuteNonQueryAsync(sqlInsert, parameters);
+        }
+
+        public async Task<int> CompleteTask(int taskId, int userId)
+        {
+            string sql = @"update ""Task"" set ""Status"" = @Status where ""TaskId"" = @TaskId";
+            var parameters = new[]
+            {
+                new NpgsqlParameter("@Status", (int)StatusTask.Complete),
+                new NpgsqlParameter("@TaskId", taskId),           
+            };
+            // Thực thi câu lệnh INSERT
+            return await _sqlQueryHelper.ExecuteNonQueryAsync(sql, parameters);
         }
     }
 }

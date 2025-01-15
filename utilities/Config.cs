@@ -33,7 +33,7 @@ namespace Container_App.utilities
     public enum StatusTask
     {
         Active = 1,
-        Lock = 2,
+        Complete = 2,
         Cancel = 3,
     }
 }

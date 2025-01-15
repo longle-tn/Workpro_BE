@@ -14,5 +14,10 @@ namespace Container_App.Services.TaskService
         {
             return await _taskRepository.AddTaskAsync(task, userId);
         }
+
+        public async Task<int> CompleteTask(int taskId, int userId)
+        {
+            return await _taskRepository.CompleteTask(taskId, userId);
+        }
     }
 }

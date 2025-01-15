@@ -27,6 +27,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
 
@@ -114,6 +115,28 @@ builder.Services.AddCors(options =>
 
 // Cấu hình ứng dụng lắng nghe HTTP
 builder.WebHost.UseUrls("http://localhost:5295");
+
+builder.Services.AddSwaggerGen(c =>
+{
+    var securityScheme = new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "Please enter into field the word 'Bearer' following by space and JWT",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        //Scheme = "bearer", // must be lower case
+        Reference = new OpenApiReference
+        {
+            Id = "Bearer",
+            Type = ReferenceType.SecurityScheme
+        }
+    };
+    c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                                        {
+                                            {securityScheme, new string[] { }}
+                                        });
+});
 
 var app = builder.Build();
 app.UseCors("AllowAll");

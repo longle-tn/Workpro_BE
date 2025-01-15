@@ -27,7 +27,6 @@ namespace Container_App.Controllers
         {
             var userId = Convert.ToInt32(User.FindFirst("jti")?.Value);
 
-
             try
             {
                 // Kiểm tra quyền của người dùng
@@ -39,12 +38,41 @@ namespace Container_App.Controllers
                 }
 
                 // Nếu có quyền, tiếp tục tạo project
-                var createdProject = await _taskService.AddTaskAsync(task, userId);
+                var createdTask = await _taskService.AddTaskAsync(task, userId);
 
                 var response = new ResponseModel(
                     success: true,
                     message: "Thêm task thành công!",
-                    data: createdProject
+                    data: createdTask
+                );
+                return Ok(response);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Forbid(ex.Message); // Trả về lỗi 403 nếu không đủ quyền
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message); // Trả về lỗi 500 cho các lỗi khác
+            }
+        }
+
+        [Authorize] // Yêu cầu xác thực
+        [HttpPost("complete-task")]
+        public async Task<ActionResult<Project>> CompleteTask([FromBody] int taskId)
+        {
+            var userId = Convert.ToInt32(User.FindFirst("jti")?.Value);
+
+
+            try
+            {            
+                // Nếu có quyền, tiếp tục tạo project
+                var complete = await _taskService.CompleteTask(taskId, userId);
+
+                var response = new ResponseModel(
+                    success: true,
+                    message: "Complete task thành công!",
+                    data: complete
                 );
                 return Ok(response);
             }
