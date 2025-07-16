@@ -22,28 +22,39 @@ namespace Container_App.Repository.UserRepository
         {
             try
             {
+                // Đảm bảo PageNumber và PageSize không bị âm hoặc 0
+                int pageNumber = Math.Max(1, page.PageNumber);
+                int pageSize = Math.Max(1, page.PageSize);
+                int offset = (pageNumber - 1) * pageSize;
+
+                // Câu lệnh SQL
                 string sqlQuery = @"
-                SELECT * FROM Users 
-                WHERE (@SearchTerm IS NULL OR FullName ILIKE '%' || @SearchTerm || '%')
-                AND IsDel = 0
-                ORDER BY UserId
+                SELECT * FROM ""Users"" 
+                WHERE (COALESCE(@SearchTerm, '') = '' OR ""FullName"" ILIKE '%' || @SearchTerm || '%')
+                AND ""IsDel"" = false
+                ORDER BY ""UserId""
                 OFFSET @Offset LIMIT @PageSize";
 
-
+                // Tham số truy vấn
                 var parameters = new[]
                 {
-                new NpgsqlParameter("@SearchTerm", page.SearchTerm ?? (object)DBNull.Value),
-                new NpgsqlParameter("@Offset", (page.PageNumber - 1) * page.PageSize),
-                new NpgsqlParameter("@PageSize", page.PageSize),
-             };
+            new NpgsqlParameter("@SearchTerm", string.IsNullOrEmpty(page.SearchTerm) ? (object)DBNull.Value : page.SearchTerm),
+            new NpgsqlParameter("@Offset", offset),
+            new NpgsqlParameter("@PageSize", pageSize),
+        };
+
                 return await _sqlQueryHelper.ExecuteQueryAsync<Users>(sqlQuery, parameters);
+            }
+            catch (PostgresException pgEx)
+            {
+                throw new Exception($"PostgreSQL Error: {pgEx.Message}");
             }
             catch (Exception ex)
             {
-
+                throw new Exception($"Lỗi truy vấn GetUsers: {ex.Message}");
             }
-            return null;
         }
+
 
 
         public async Task<Users> GetUserById(int id)

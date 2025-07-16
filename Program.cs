@@ -39,7 +39,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 #region Connection String
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("PostgreSqlConnection");
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseNpgsql(connectionString));
 #endregion
@@ -114,7 +114,7 @@ builder.Services.AddCors(options =>
 });
 
 // Cấu hình ứng dụng lắng nghe HTTP
-builder.WebHost.UseUrls("http://localhost:5295");
+builder.WebHost.UseUrls("http://0.0.0.0:5925");
 
 builder.Services.AddSwaggerGen(c =>
 {

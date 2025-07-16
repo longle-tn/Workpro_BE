@@ -59,7 +59,7 @@ namespace Container_App.Controllers
         [HttpPost("autho")]
         public async Task<IActionResult> Autho(int UserId, [FromBody] List<Permission> roles)
         {
-            if (UserId == null)
+            if (UserId == 0 || UserId.ToString() == "" || UserId == null)
             {
                 return BadRequest("User not found");
             }

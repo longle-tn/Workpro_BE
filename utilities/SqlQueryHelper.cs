@@ -30,30 +30,6 @@ namespace Container_App.utilities
         {
             return await _context.Database.ExecuteSqlRawAsync(sql, parameters);
         }
-        public async Task<T?> ExecuteScalarAsync<T>(string sql, params object[] parameters)
-        {
-            using var command = _context.Database.GetDbConnection().CreateCommand();
-            command.CommandText = sql;
-
-            if (parameters != null)
-            {
-                for (int i = 0; i < parameters.Length; i++)
-                {
-                    var parameter = command.CreateParameter();
-                    parameter.ParameterName = $"@p{i}";
-                    parameter.Value = parameters[i] ?? DBNull.Value;
-                    command.Parameters.Add(parameter);
-                }
-            }
-
-            if (command.Connection.State != ConnectionState.Open)
-            {
-                await command.Connection.OpenAsync();
-            }
-
-            var result = await command.ExecuteScalarAsync();
-            return (T)result; // Đảm bảo trả về đúng kiểu
-        }
 
         public async Task<T?> ExecuteScalarAsync<T>(string sql, params DbParameter[] parameters)
         {
