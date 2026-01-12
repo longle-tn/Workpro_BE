@@ -46,16 +46,17 @@ namespace Container_App.Controllers
         }
 
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("create-user")]
         public async Task<ActionResult<ResponseModel>> CreateUser(Users user)
         {
             var userId = Convert.ToInt32(User.FindFirst("jti")?.Value);
             try
             {
-                var hasPermission = await _authService.HasPermission(userId, "Users", "add");
+                //var hasPermission = await _authService.HasPermission(userId, "Users", "add");
 
-                if (!hasPermission)
+                //if (!hasPermission)
+                if(false)
                 {
                     var response = new ResponseModel(
                         success: false,

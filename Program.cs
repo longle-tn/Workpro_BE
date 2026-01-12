@@ -76,6 +76,7 @@ builder.Services.AddScoped<ITaskService, TaskService>();
 #endregion
 
 
+
 var jwtSecretKey = "pr5Oyw1J3I8E04g3XsPf5d8wPT9W2bMcwCm6qzHoOoI=";
 
 builder.Configuration["JWT_SECRET_KEY"] = jwtSecretKey;
@@ -118,39 +119,51 @@ builder.WebHost.UseUrls("http://0.0.0.0:5925");
 
 builder.Services.AddSwaggerGen(c =>
 {
-    var securityScheme = new OpenApiSecurityScheme
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "My API",
+        Version = "v1"
+    });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
-        Description = "Please enter into field the word 'Bearer' following by space and JWT",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        //Scheme = "bearer", // must be lower case
-        Reference = new OpenApiReference
-        {
-            Id = "Bearer",
-            Type = ReferenceType.SecurityScheme
-        }
-    };
-    c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+        Description = "Nhập token theo dạng: Bearer {token}"
+    });
+
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                                        {
-                                            {securityScheme, new string[] { }}
-                                        });
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
+
 
 var app = builder.Build();
 app.UseCors("AllowAll");
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+    });
 }
 
-//app.UseCors(MyAllowSpecificOrigins);
-
-app.UseHttpsRedirection(); // Đặt trước UseRouting
 //app.UseHttpsRedirection(); // Đặt trước UseRouting // bỏ chạy http thâu
 app.UseRouting();
 
@@ -161,5 +174,12 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers(); // Không cần gọi MapControllers ở đây
 });
+
+//Thêm đoạn code này nếu muốn chạy code first
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<MyDbContext>();
+//    db.Database.EnsureCreated();   // hoặc db.Database.Migrate();
+//}
 
 app.Run();
