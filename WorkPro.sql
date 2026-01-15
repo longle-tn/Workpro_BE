@@ -59,76 +59,34 @@ create table UserRoles
 	UserId uniqueidentifier,
 	RoleId uniqueidentifier
 )
+go
 
-insert into UserLogin(Id, Username, Password) values
-(NEWID(), 'longlt', '123456')
-select * from UserProfile
+create proc sp_CreateUser
+@Username nvarchar(100),
+@Password nvarchar(100),
+@FullName nvarchar(255),
+@Phone nvarchar(15),
+@Email nvarchar(255),
+@Address nvarchar(500),
+@CreateBy uniqueidentifier
+as
+begin 
+	begin try
+		begin transaction;
+			declare @Id uniqueidentifier = newid();
+			insert into UserLogin(Id, Username, Password) values
+			(@Id, @Username, @Password)
 
-insert into UserProfile (Id, FullName, Phone, Email, Address,
-IsDel, CreateAt, UserLoginId) values
-(NEWID(), N'Lê Thành Long', '0933026960', 'thanhlongle978@gmail.com',
-N'129 Tầm Lanh, Phước Thạnh, Tây Ninh', 0, GETDATE(), 
-'58D2F21D-4FF5-427C-8929-6D8D0FFD6505')
+			insert into UserProfile(Id, FullName, Phone, Email, Address, IsDel, CreateAt, CreateBy, UserLoginId)
+			values
+			(NEWID(), @FullName, @Phone, @Email, @Address, 0, GETDATE(), @CreateBy, @Id)
+		commit transaction;
+	end try
+	BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+end;
 
-insert into Roles(Id, RoleName, Description, CreateAt) values
-(NEWID(), N'Admin', N'Nhóm quyền dành cho quản trị viên', GETDATE())
 
-insert into Roles(Id, RoleName, Description, CreateAt) values
-(NEWID(), N'Staff', N'Nhóm quyền dành cho nhân viên', GETDATE())
-
-insert into Resources(Id, ResourceName, Description) values
-(NEWID(), N'Projects', N''),
-(NEWID(), N'Tasks', N'')
-
-insert into Permissions(Id, Action, CreateAt) values
-(NEWID(), N'View', GETDATE()),
-(NEWID(), N'Create', GETDATE()),
-(NEWID(), N'Update', GETDATE()),
-(NEWID(), N'Delete', GETDATE())
-
-select * from Roles
-select * from Resources
-select * from Permissions
-
-insert into RolePermissions(Id, RoleId, ResourceId, PermissionId) values
-(NEWID(), 'C24517D8-0B66-40E4-89B3-55229F797BDE', 
-'61259117-4AF4-4E98-9A5E-8A056461BA3C', 
-'9FAC50B9-924D-4F69-AACA-50388C8B8827'),
-
-(NEWID(), 'C24517D8-0B66-40E4-89B3-55229F797BDE', 
-'61259117-4AF4-4E98-9A5E-8A056461BA3C', 
-'701F7CEE-F353-48A9-AF0F-E3706C4DC84D'),
-
-(NEWID(), 'C24517D8-0B66-40E4-89B3-55229F797BDE', 
-'61259117-4AF4-4E98-9A5E-8A056461BA3C', 
-'B068251B-24F5-4530-B859-E6A28D9E29E5'),
-
-(NEWID(), 'C24517D8-0B66-40E4-89B3-55229F797BDE', 
-'61259117-4AF4-4E98-9A5E-8A056461BA3C', 
-'9FAC50B9-924D-4F69-AACA-50388C8B8827')
-
-select * from Roles
-select * from UserLogin
-
-insert into UserRoles(Id, UserId, RoleId) values
-(NEWID(), '58D2F21D-4FF5-427C-8929-6D8D0FFD6505',
-'C24517D8-0B66-40E4-89B3-55229F797BDE')
-
-SELECT 
-    r.RoleName,
-    res.ResourceName,
-    p.[Action]
-FROM UserLogin u
-JOIN UserRoles ur 
-    ON u.Id = ur.UserId
-JOIN Roles r 
-    ON ur.RoleId = r.Id
-JOIN RolePermissions rp 
-    ON r.Id = rp.RoleId
-JOIN Resources res 
-    ON rp.ResourceId = res.Id
-JOIN Permissions p 
-    ON rp.PermissionId = p.Id
-WHERE u.Id = '58D2F21D-4FF5-427C-8929-6D8D0FFD6505'
-ORDER BY res.ResourceName, p.[Action];
 

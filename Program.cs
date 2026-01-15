@@ -1,27 +1,6 @@
-﻿using Container_App.Data;
-using Container_App.Repository.AuthRepository;
-using Container_App.Repository.MenuRepository;
-using Container_App.Repository.PermissionRepository;
-using Container_App.Repository.ProjectRepository;
-using Container_App.Repository.ProjectUserInviteRepository;
-using Container_App.Repository.ProjectUserRepository;
-using Container_App.Repository.RoleMenuAccessRepository;
-using Container_App.Repository.RolePermissionsRepository;
-using Container_App.Repository.RoleRepository;
-using Container_App.Repository.TaskRepository;
-using Container_App.Repository.UserRepository;
-using Container_App.Repository.UserRoleRepository;
-using Container_App.Services.AuthService;
-using Container_App.Services.MenuService;
-using Container_App.Services.PermissionService;
-using Container_App.Services.ProjectService;
-using Container_App.Services.RoleMenuAccessService;
-using Container_App.Services.RolePermissionsService;
-using Container_App.Services.RoleService;
-using Container_App.Services.TaskService;
-using Container_App.Services.UserRoleService;
-using Container_App.Services.UserService;
-using Container_App.utilities;
+﻿using Container_App.Core.Interface.Users;
+using Container_App.Data.Connection;
+using Container_App.Service.Services.Users;
 using dotenv.net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -39,43 +18,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 #region Connection String
-var connectionString = builder.Configuration.GetConnectionString("PostgreSqlConnection");
-builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseNpgsql(connectionString));
 #endregion
 
-#region Add Repository
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
-builder.Services.AddScoped<IProjectUserRepository, ProjectUserRepository>();
-builder.Services.AddScoped<IProjectUserInviteRepository, ProjectUserInviteRepository>();
-builder.Services.AddScoped<IMenuRepository, MenuRepository>();
-builder.Services.AddScoped<SqlQueryHelper>();
-builder.Services.AddScoped<Config>();
-builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
-builder.Services.AddScoped<IRolePermissionsRepository, RolePermissionsRepository>();
-builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
-builder.Services.AddScoped<IRoleMenuAccessRepository, RoleMenuAccessRepository>();
-builder.Services.AddScoped<IMenuRepository, MenuRepository>();
-builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-#endregion
+builder.Services.AddScoped<IStoredProcedureExecutor, StoredProcedureExecutor>();
 
 #region Add Service
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IProjectService, ProjectService>();
-builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<IPermissionService, PermissionService>();
-builder.Services.AddScoped<IRolePermissionsService, RolePermissionsService>();
-builder.Services.AddScoped<IUserRoleService, UserRoleService>();
-builder.Services.AddScoped<IRoleMenuAccessService, RoleMenuAccessService>();
-builder.Services.AddScoped<IMenuService, MenuService>();
-builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IUserServices, UserServices>();
 #endregion
-
-
 
 var jwtSecretKey = "pr5Oyw1J3I8E04g3XsPf5d8wPT9W2bMcwCm6qzHoOoI=";
 
