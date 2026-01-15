@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Container_App.Common\Container_App.Common.csproj" />
+    <ProjectReference Include="..\Container_App.Core\Container_App.Core.csproj" />
+    <ProjectReference Include="..\Container_App.Data\Container_App.Data.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\bin\Debug\net6.0\Container_App.Data.deps.json
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\bin\Debug\net6.0\Container_App.Data.dll
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\bin\Debug\net6.0\Container_App.Data.pdb
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\obj\Debug\net6.0\Container_App.Data.csproj.AssemblyReference.cache
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\obj\Debug\net6.0\Container_App.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\obj\Debug\net6.0\Container_App.Data.AssemblyInfoInputs.cache
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\obj\Debug\net6.0\Container_App.Data.AssemblyInfo.cs
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\obj\Debug\net6.0\Container_App.Data.csproj.CoreCompileInputs.cache
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\obj\Debug\net6.0\Container_App.Data.dll
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\obj\Debug\net6.0\refint\Container_App.Data.dll
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\obj\Debug\net6.0\Container_App.Data.pdb
+D:\LeThanhLong\ProjectManagementWork\Container_App.Data\obj\Debug\net6.0\ref\Container_App.Data.dll
