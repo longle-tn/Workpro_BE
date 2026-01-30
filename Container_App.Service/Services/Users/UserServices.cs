@@ -46,5 +46,25 @@ namespace Container_App.Service.Services.Users
                 throw;
             }
         }
+
+        public async Task<UserProfile> Login(string userName, string passWord)
+        {
+            try
+            {
+                string hash = Hash.HashPassword(passWord);
+                var arr = new[]
+                {
+                    new SqlParameter("@Username", userName),
+                    new SqlParameter("@Password", hash),                  
+                };
+                return await _executor.QuerySingleAsync<UserProfile>("sp_Login", arr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message,"Error when creating user");
+                
+                throw;
+            }
+        }
     }
 }

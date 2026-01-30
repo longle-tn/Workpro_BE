@@ -10,5 +10,6 @@ namespace Container_App.Core.Interface.Users
     public interface IUserServices
     {
         Task<int> Insert(UserProfile user);
+        Task<UserProfile> Login(string userName, string passWord);
     }
 }

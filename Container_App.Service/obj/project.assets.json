@@ -350,11 +350,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Service\\Container_App.Service.csproj",
+      "projectUniqueName": "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Service\\Container_App.Service.csproj",
       "projectName": "Container_App.Service",
-      "projectPath": "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Service\\Container_App.Service.csproj",
+      "projectPath": "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Service\\Container_App.Service.csproj",
       "packagesPath": "C:\\Users\\thanh\\.nuget\\packages\\",
-      "outputPath": "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Service\\obj\\",
+      "outputPath": "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Service\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -375,14 +375,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Common\\Container_App.Common.csproj": {
-              "projectPath": "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Common\\Container_App.Common.csproj"
+            "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Common\\Container_App.Common.csproj": {
+              "projectPath": "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Common\\Container_App.Common.csproj"
             },
-            "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Core\\Container_App.Core.csproj": {
-              "projectPath": "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Core\\Container_App.Core.csproj"
+            "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Core\\Container_App.Core.csproj": {
+              "projectPath": "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Core\\Container_App.Core.csproj"
             },
-            "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Data\\Container_App.Data.csproj": {
-              "projectPath": "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Data\\Container_App.Data.csproj"
+            "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Data\\Container_App.Data.csproj": {
+              "projectPath": "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Data\\Container_App.Data.csproj"
             }
           }
         }

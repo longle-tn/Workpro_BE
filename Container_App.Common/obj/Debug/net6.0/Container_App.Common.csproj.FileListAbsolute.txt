@@ -9,3 +9,15 @@ D:\LeThanhLong\ProjectManagementWork\Container_App.Common\obj\Debug\net6.0\Conta
 D:\LeThanhLong\ProjectManagementWork\Container_App.Common\obj\Debug\net6.0\refint\Container_App.Common.dll
 D:\LeThanhLong\ProjectManagementWork\Container_App.Common\obj\Debug\net6.0\Container_App.Common.pdb
 D:\LeThanhLong\ProjectManagementWork\Container_App.Common\obj\Debug\net6.0\ref\Container_App.Common.dll
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\bin\Debug\net6.0\Container_App.Common.deps.json
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\bin\Debug\net6.0\Container_App.Common.dll
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\bin\Debug\net6.0\Container_App.Common.pdb
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\obj\Debug\net6.0\Container_App.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\obj\Debug\net6.0\Container_App.Common.AssemblyInfoInputs.cache
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\obj\Debug\net6.0\Container_App.Common.AssemblyInfo.cs
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\obj\Debug\net6.0\Container_App.Common.csproj.CoreCompileInputs.cache
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\obj\Debug\net6.0\Container_App.Common.sourcelink.json
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\obj\Debug\net6.0\Container_App.Common.dll
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\obj\Debug\net6.0\refint\Container_App.Common.dll
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\obj\Debug\net6.0\Container_App.Common.pdb
+D:\LeThanhLong\Workpro\Projects\Container_App.Common\obj\Debug\net6.0\ref\Container_App.Common.dll

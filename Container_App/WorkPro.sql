@@ -87,6 +87,45 @@ begin
         THROW;
     END CATCH
 end;
+go
+
+create proc sp_Login
+@Username nvarchar(100),
+@Password nvarchar(100)
+as
+begin
+	select ul.Id, Username, FullName, Email,
+	Phone, Address
+	from UserLogin ul
+	join UserProfile up on ul.Id = up.UserLoginId
+	where ul.Username = @Username and ul.Password = @Password
+	and IsDel = 0
+end
+go
+
+create proc sp_GetListPermissionByUser
+@UserId uniqueidentifier
+as
+begin
+	SELECT DISTINCT
+    res.ResourceName,
+    p.[Action]
+	FROM UserRoles ur
+	JOIN Roles r 
+		ON ur.RoleId = r.Id
+	JOIN RolePermissions rp 
+		ON r.Id = rp.RoleId
+	JOIN Resources res 
+		ON rp.ResourceId = res.Id
+	JOIN [Permissions] p 
+		ON rp.PermissionId = p.Id
+	WHERE ur.UserId = @UserId
+	ORDER BY res.ResourceName, p.[Action]
+end;
+
+select * from UserLogin
+
+update UserLogin set Password = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3'
 
 
 

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Core\\Container_App.Core.csproj",
+      "projectUniqueName": "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Core\\Container_App.Core.csproj",
       "projectName": "Container_App.Core",
-      "projectPath": "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Core\\Container_App.Core.csproj",
+      "projectPath": "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Core\\Container_App.Core.csproj",
       "packagesPath": "C:\\Users\\thanh\\.nuget\\packages\\",
-      "outputPath": "D:\\LeThanhLong\\ProjectManagementWork\\Container_App.Core\\obj\\",
+      "outputPath": "D:\\LeThanhLong\\Workpro\\Projects\\Container_App.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

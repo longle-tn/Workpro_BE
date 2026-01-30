@@ -24,6 +24,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
@@ -36,6 +37,11 @@
     <ProjectReference Include="..\Container_App.Core\Container_App.Core.csproj" />
     <ProjectReference Include="..\Container_App.Data\Container_App.Data.csproj" />
     <ProjectReference Include="..\Container_App.Service\Container_App.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+    <Folder Include="Middleware\" />
   </ItemGroup>
 
 </Project>

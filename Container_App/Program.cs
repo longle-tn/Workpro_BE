@@ -1,5 +1,7 @@
-﻿using Container_App.Core.Interface.Users;
+﻿using Container_App.Core.Interface.Permissions;
+using Container_App.Core.Interface.Users;
 using Container_App.Data.Connection;
+using Container_App.Service.Services.Permissions;
 using Container_App.Service.Services.Users;
 using dotenv.net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,35 +26,47 @@ builder.Services.AddScoped<IStoredProcedureExecutor, StoredProcedureExecutor>();
 
 #region Add Service
 builder.Services.AddScoped<IUserServices, UserServices>();
+builder.Services.AddScoped<IPermissionService, PermissionService>();
 #endregion
 
-var jwtSecretKey = "pr5Oyw1J3I8E04g3XsPf5d8wPT9W2bMcwCm6qzHoOoI=";
+var jwtSection = builder.Configuration.GetSection("Jwt");
+var jwtKey = jwtSection["Key"];
 
-builder.Configuration["JWT_SECRET_KEY"] = jwtSecretKey;
-if (string.IsNullOrEmpty(jwtSecretKey))
+if (string.IsNullOrWhiteSpace(jwtKey))
 {
-    throw new InvalidOperationException("JWT_SECRET_KEY must be set in the .env file.");
+    throw new InvalidOperationException("JWT Key is missing.");
 }
-var key = Encoding.UTF8.GetBytes(jwtSecretKey);
 
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(x =>
-{
-    x.RequireHttpsMetadata = false;
-    x.SaveToken = true;
-    x.TokenValidationParameters = new TokenValidationParameters
+var keyBytes = Convert.FromBase64String(jwtKey);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ClockSkew = TimeSpan.Zero
-    };
+        options.RequireHttpsMetadata = false; // true khi production
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+
+            ValidateIssuer = true,
+            ValidIssuer = jwtSection["Issuer"],
+
+            ValidateAudience = true,
+            ValidAudience = jwtSection["Audience"],
+
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+// Program.cs
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration["ConnectionRedis:Redis"];
 });
+
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
@@ -99,6 +113,8 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+builder.Services.AddMemoryCache();
 
 
 var app = builder.Build();

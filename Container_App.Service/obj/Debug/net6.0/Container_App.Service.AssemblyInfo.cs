@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Container_App.Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c5d4580ffe7ceddfb8d50d435db769f1220cac09")]
 [assembly: System.Reflection.AssemblyProductAttribute("Container_App.Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Container_App.Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
