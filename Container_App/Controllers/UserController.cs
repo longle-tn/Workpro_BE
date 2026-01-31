@@ -76,7 +76,6 @@ namespace Container_App.Controllers
             {
                 status = true,
                 Token = token,
-                UserId = user.Id,
                 FullName = user.FullName,
                 Permissions = permissions,
                 message = "Đăng nhập thành công"
