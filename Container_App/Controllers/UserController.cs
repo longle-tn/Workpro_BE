@@ -1,7 +1,9 @@
 ﻿using Container_App.Core.Interface.Permissions;
+using Container_App.Core.Interface.RolePermissions;
 using Container_App.Core.Interface.Users;
 using Container_App.Core.Model.Permissions;
 using Container_App.Core.Model.Users;
+using Container_App.Model.RolePermissions;
 using Container_App.Model.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,13 +25,15 @@ namespace Container_App.Controllers
         private readonly IUserServices _userServices;
         private readonly IPermissionService _permissionServices;
         private readonly IMemoryCache _memoryCache;
+        private readonly IRolePermissionService _rolePermissionService;
         public UserController(IUserServices userServices, IPermissionService permissionService,
-            IConfiguration config, IMemoryCache memoryCache)
+            IConfiguration config, IMemoryCache memoryCache, IRolePermissionService rolePermissionService)
         {
             _userServices = userServices;
             _permissionServices = permissionService;
             _config = config;
             _memoryCache = memoryCache;
+            _rolePermissionService = rolePermissionService;
         }
 
         [HttpPost]
@@ -84,19 +88,21 @@ namespace Container_App.Controllers
 
         [HttpPost]
         [Route("api/insert-user")]
-        [Authorize]
-        public async Task<IActionResult> Insert([FromBody] CreateUserDto u)
-        {
-            var userCreate = new UserProfile()
+        public async Task<IActionResult> Insert([FromBody] UserProfile u)
+        {   
+            int result = await _userServices.Insert(u);
+            if (result == 0)
             {
-                UserName = u.UserName,
-                Password = u.Password,
-                FullName = u.FullName,
-                Email = u.Email,
-                Address = u.Address,
-                CreateBy = u.CreateBy,
-            };
-            int result = await _userServices.Insert(userCreate);
+                return BadRequest();
+            }
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("api/insert-role-permission")]
+        public async Task<IActionResult> InsertRolePermission([FromBody] CreateRolePermissionDto dto)
+        {
+            var result = await _rolePermissionService.Insert(dto.RoleId, dto.RolePermissions);
             if (result == 0)
             {
                 return BadRequest();

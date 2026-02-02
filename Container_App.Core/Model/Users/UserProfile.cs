@@ -23,5 +23,6 @@ namespace Container_App.Core.Model.Users
         public DateTime? CreateAt { get; set; }
         public Guid? CreateBy { get; set; }
         public Guid UserLoginId { get; set; }
+        public Guid RoleId { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Container_App.Core.Model.Users;
 using Container_App.Data.Connection;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,8 @@ namespace Container_App.Service.Services.Users
                     new SqlParameter("@Phone", user.Phone),
                     new SqlParameter("@Email", user.Email),
                     new SqlParameter("@Address", user.Address),
-                    new SqlParameter("@CreateBy", (object?)user.CreateBy ?? DBNull.Value)
+                    new SqlParameter("@CreateBy", (object?)user.CreateBy ?? DBNull.Value),
+                    new SqlParameter("@RoleId", user.RoleId)
                 };
                 return await _executor.ExecuteAsync("sp_CreateUser", arr);
             }

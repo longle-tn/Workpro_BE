@@ -1,4 +1,4 @@
-create database WorkPro
+use workpro
 
 create table UserLogin
 (

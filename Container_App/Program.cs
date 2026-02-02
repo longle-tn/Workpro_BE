@@ -1,7 +1,9 @@
 ﻿using Container_App.Core.Interface.Permissions;
+using Container_App.Core.Interface.RolePermissions;
 using Container_App.Core.Interface.Users;
 using Container_App.Data.Connection;
 using Container_App.Service.Services.Permissions;
+using Container_App.Service.Services.RolePermissions;
 using Container_App.Service.Services.Users;
 using dotenv.net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,6 +29,7 @@ builder.Services.AddScoped<IStoredProcedureExecutor, StoredProcedureExecutor>();
 #region Add Service
 builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
 #endregion
 
 var jwtSection = builder.Configuration.GetSection("Jwt");
