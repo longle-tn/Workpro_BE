@@ -41,11 +41,9 @@ namespace Container_App.Service.Services.Users
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message,
-                "Error when creating user. Username={Username}, Email={Email}",
-                user.UserName,
-                user.Email);
+                "Error when creating user. Username={Username}, Email={Email}", user.UserName, user.Email);
 
-                throw;
+                return -1;
             }
         }
 
@@ -63,7 +61,7 @@ namespace Container_App.Service.Services.Users
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message,"Error when creating user");
+                Console.WriteLine(ex.Message,"Error when login");
                 
                 throw;
             }

@@ -10,5 +10,6 @@ namespace Container_App.Core.Model.Permissions
     {
         public string ResourceName { get; set; }
         public string Action { get; set; }
+        public string Icon { get; set; }    
     }
 }

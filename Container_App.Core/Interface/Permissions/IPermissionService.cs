@@ -10,6 +10,5 @@ namespace Container_App.Core.Interface.Permissions
     public interface IPermissionService
     {
         Task<IEnumerable<Permission>> GetListPermissionByUser(Guid userId);
-        bool HasPermission( IEnumerable<Permission> userPermissions,string resource, string action);
     }
 }

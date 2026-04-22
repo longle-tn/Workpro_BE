@@ -42,9 +42,9 @@ namespace Container_App.Service.Services.Permissions
         public bool HasPermission(IEnumerable<Permission> userPermissions, string resource, string action)
         {
             return userPermissions.Any(p =>
-            p.ResourceName.Equals(resource, StringComparison.OrdinalIgnoreCase)
-            && p.Action.Equals(action, StringComparison.OrdinalIgnoreCase)
-        );
+                p.ResourceName.Equals(resource, StringComparison.OrdinalIgnoreCase)
+                && p.Action.Equals(action, StringComparison.OrdinalIgnoreCase)
+            );
         }
     }
 }

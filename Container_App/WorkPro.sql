@@ -77,6 +77,14 @@ CREATE TABLE KhachSan (
     NgayTao DATETIME DEFAULT GETDATE(),
 );
 
+go
+Create table KhachSanImages
+(
+	Id bigint primary key identity,
+	KhachSanId uniqueidentifier,
+	Url nvarchar(1000)
+)
+
 
 CREATE TABLE LoaiPhong (
     Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWSEQUENTIALID(),
@@ -153,3 +161,71 @@ CREATE TABLE KhachSan_TienIch (
     TienIchId UNIQUEIDENTIFIER,
     PRIMARY KEY (KhachSanId, TienIchId)
 );
+
+alter table Resources
+add Icon nvarchar(100)
+
+create table RefreshToken
+(
+	Id bigint primary key identity,
+	UserId uniqueidentifier,
+	Token nvarchar(1000),
+	ExpiryDate int,
+	CreatedDate datetime,
+	Status int,
+	FullName nvarchar(255),
+	RoleId uniqueidentifier,
+	RoleName nvarchar(255)
+)
+
+create table Banner
+(
+	Id bigint primary key identity,
+	Title nvarchar(500),
+	Subtitle nvarchar(1000),
+	Url nvarchar(1000),
+	IsActive int,
+	CreatedDate datetime
+)
+go
+
+create table GoiQuangCao
+(
+	Id int primary key identity,
+	TenGoi nvarchar(255),
+	SoNgay int,
+	GiaTien decimal(18, 2),
+	DiemUuTien int,
+	IsActive int,
+	CreatedDate datetime
+)
+
+INSERT INTO GoiQuangCao
+VALUES 
+(N'Goi Silver', 7, 500000, 10, 1, getdate()),
+(N'Goi Gold', 15, 1200000, 20, 1, getdate()),
+(N'Goi Platinum', 30, 2500000, 30, 1, getdate()),
+(N'Goi VIP', 60, 5000000, 50, 1, getdate());
+go
+
+create table KhachSanQuangCao
+(
+	Id bigint primary key identity,
+	KhachSanId uniqueidentifier,
+	GoiQuanCaoId int,
+	NgayBatDau datetime,
+	NgayKetThuc datetime,
+	DiemUuTien int,
+	TrangThai nvarchar(50),
+	CreatedDate datetime
+)
+
+
+SELECT *
+FROM KhachSan ks
+LEFT JOIN KhachSanQuangCao qc
+    ON ks.id = qc.KhachSanId
+    AND qc.TrangThai = 'active'
+    AND GETDATE() BETWEEN qc.NgayBatDau AND qc.NgayKetThuc
+ORDER BY 
+    ISNULL(qc.DiemUuTien, 0) DESC

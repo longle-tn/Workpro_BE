@@ -1,9 +1,23 @@
-﻿using Container_App.Core.Interface.Permissions;
+﻿using Container_App.Common.Config;
+using Container_App.Core.Interface.Banners;
+using Container_App.Core.Interface.KhachSans;
+using Container_App.Core.Interface.LoaiPhongs;
+using Container_App.Core.Interface.Permissions;
+using Container_App.Core.Interface.Phongs;
+using Container_App.Core.Interface.RefreshTokens;
 using Container_App.Core.Interface.RolePermissions;
+using Container_App.Core.Interface.TienIchs;
 using Container_App.Core.Interface.Users;
 using Container_App.Data.Connection;
+using Container_App.Service.Services.Banners;
+using Container_App.Service.Services.Cloudinarys;
+using Container_App.Service.Services.KhachSans;
+using Container_App.Service.Services.LoaiPhongs;
 using Container_App.Service.Services.Permissions;
+using Container_App.Service.Services.Phongs;
+using Container_App.Service.Services.RefreshTokens;
 using Container_App.Service.Services.RolePermissions;
+using Container_App.Service.Services.TienIchs;
 using Container_App.Service.Services.Users;
 using dotenv.net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,6 +26,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
+using System.ComponentModel.Design;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +35,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<CloudinarySettings>(
+    builder.Configuration.GetSection("CloudinarySettings"));
 
 #region Connection String
 #endregion
@@ -30,6 +48,14 @@ builder.Services.AddScoped<IStoredProcedureExecutor, StoredProcedureExecutor>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
+builder.Services.AddScoped<IKhachSanService, KhachSanService>();
+builder.Services.AddScoped<ITienIchService, TienIchService>();
+builder.Services.AddScoped<ILoaiPhongService, LoaiPhongService>();
+builder.Services.AddScoped<IPhongService, PhongService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+builder.Services.AddScoped<CloudinaryService>();
+builder.Services.AddScoped<IBannerService, BannerService>();
 #endregion
 
 var jwtSection = builder.Configuration.GetSection("Jwt");
